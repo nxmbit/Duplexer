@@ -1,0 +1,15 @@
+module duplexer 1.0;
+
+require {
+	type cupsd_t;
+	type unconfined_t;
+	type var_run_t;
+	class unix_stream_socket connectto;
+	class sock_file write;
+}
+
+# Allow cupsd_t to connect to unconfined_t sockets
+allow cupsd_t unconfined_t:unix_stream_socket connectto;
+
+# Allow cupsd_t to write to sock_file in var_run_t
+allow cupsd_t var_run_t:sock_file write;

@@ -1,0 +1,71 @@
+#!/usr/bin/python
+import os
+import sys
+import socket
+import logging
+import struct
+import duplexer_ipc_pb2
+
+SOCKET_PATH = "/var/run/duplexer_socket"
+LOG_PATH = "/tmp/duplexer_filter.log"
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG, filename=LOG_PATH, filemode="w")
+
+
+class Filter:
+    def __init__(self):
+        self.job_id = int(sys.argv[1])
+        self.user = sys.argv[2]
+        self.title = sys.argv[3]
+        self.num_copies = int(sys.argv[4])
+        self.options = sys.argv[5]
+        self.virtual_printer = os.environ["PRINTER"]
+        self.stdin = sys.stdin.buffer.read()
+
+    def serialize_data(self):
+        logger.debug("Serializing data")
+        data = duplexer_ipc_pb2.PrintRequest()
+        data.job_id = self.job_id
+        data.user = self.user
+        data.title = self.title
+        data.num_copies = self.num_copies
+        data.options = self.options
+        data.virtual_printer = self.virtual_printer
+        data.file = self.stdin
+
+        serialized_data = data.SerializeToString()
+        serialized_data_size = struct.pack("!I", len(serialized_data))
+
+        return serialized_data_size, serialized_data
+
+    def ipc_send(self):
+        logger.info("Attempting to connect to socket")
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            sock.connect(SOCKET_PATH)
+        except ConnectionRefusedError:
+            logger.error("Could not connect to socket. Is the daemon running?")
+            raise
+        except FileNotFoundError:
+            logger.error(f"Socket does not exist at {SOCKET_PATH}, is the daemon running?")
+            raise
+        except PermissionError:
+            logger.error("Permission denied when connecting to socket")
+            raise
+
+        data_size, data = self.serialize_data()
+        logger.info("Sending data to socket")
+        sock.sendall(data_size)
+        sock.sendall(data)
+
+        sock.close()
+
+
+def main():
+    logger.info("Filter called from CUPS, printer: " + os.environ["PRINTER"])
+    cups_filter = Filter()
+    cups_filter.ipc_send()
+    return 0
+
+main()

@@ -1,0 +1,6 @@
+data/com.github.nxmbit.duplexer.desktop.in
+data/com.github.nxmbit.duplexer.appdata.xml.in
+data/com.github.nxmbit.duplexer.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

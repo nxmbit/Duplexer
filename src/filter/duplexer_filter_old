@@ -1,0 +1,16 @@
+#!/bin/bash
+set -x
+
+#cat >> /tmp/file
+
+job="$1"
+user="$2"
+title="$3"
+numcopies="$4"
+options="$5"
+filename="$6"
+virtual_printer_name="$PRINTER"
+
+/usr/bin/sudo duplexer filter --printer "$virtual_printer_name" --job_id "$job" --user "$user" --title "$title" --num_copies "$numcopies" --options "$options" --filename "$filename" >> /tmp/duplexer.log 2>> /tmp/duplexer_error.log
+
+exit 0

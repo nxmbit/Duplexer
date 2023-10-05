@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1"/>
+  <template class="DuplexerSetupWindow" parent="AdwWindow">
+    <property name="title" translatable="true">Welcome to Duplexer</property>
+    <property name="resizable">true</property>
+    <property name="deletable">true</property>
+    <property name="modal">true</property>
+    <property name="default-width">500</property>
+    <property name="default-height">500</property>
+    <child>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <child>
+          <object class="AdwLeaflet" id="leaflet">
+            <property name="can-navigate-back">false</property>
+            <property name="can-unfold">false</property>
+            <child>
+              <object class="GtkBox" id="main_view">
+                <property name="orientation">1</property>
+                <child>
+                  <object class="AdwHeaderBar" id="titlebar">
+                    <style>
+                      <class name="flat"/>
+                    </style>
+                    <property name="centering-policy">1</property>
+                    <child type="title">
+                      <object class="AdwCarouselIndicatorDots">
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                        <property name="carousel">carousel</property>
+                        <property name="orientation">0</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkOverlay">
+                    <child type="overlay">
+                      <object class="GtkButton" id="btn_back">
+                        <style>
+                          <class name="circular"/>
+                        </style>
+                        <property name="margin-start">12</property>
+                        <property name="icon-name">go-previous-symbolic</property>
+                        <property name="halign">1</property>
+                        <property name="valign">3</property>
+                        <property name="visible">false</property>
+                        <property name="tooltip-text" translatable="true">Previous</property>
+                      </object>
+                    </child>
+                    <property name="child">
+                      <object class="AdwCarousel" id="carousel">
+                        <property name="vexpand">true</property>
+                        <property name="hexpand">true</property>
+                        <property name="allow-scroll-wheel">true</property>
+                        <property name="allow-mouse-drag">true</property>
+                        <property name="allow-long-swipes">false</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">1</property>
+                            <property name="vexpand">true</property>
+                            <property name="hexpand">true</property>
+                            <child>
+                              <object class="GtkImage" id="img_welcome">
+                                <property name="resource">/com/github/GradienceTeam/Gradience/images/welcome.svg</property>
+                                <property name="pixel-size">300</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwStatusPage" id="page_welcome">
+                                <property name="title" translatable="true">Welcome to Duplexer</property>
+                                <property name="description" translatable="true">Easily print on two sides</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwStatusPage" id="page_setup_info">
+                            <property name="icon-name">software-update-available-symbolic</property>
+                            <property name="title" translatable="true">Installation</property>
+                            <property name="description" translatable="true">Before using Duplexer you have to install a virtual printer</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwStatusPage" id="page_printer_list">
+                            <property name="vexpand">true</property>
+                            <property name="hexpand">true</property>
+                            <property name="icon-name">larger-brush-symbolic</property>
+                            <property name="title" translatable="true">Customize Adwaita Theme</property>
+                            <property name="description" translatable="true">Change colors of windows, buttons, lists and more; with advanced features like adding custom CSS.</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwStatusPage" id="page_configure">
+                            <property name="vexpand">true</property>
+                            <property name="hexpand">true</property>
+                            <property name="title" translatable="true">Configure Gradience</property>
+                            <property name="description" translatable="true">Install adw-gtk3 theme for legacy applications and configure system for theming.</property>
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <child>
+                                      <object class="AdwActionRow" id="configure_adw_gtk3">
+                                        <property name="title" translatable="true">Legacy Apps Theming</property>
+                                        <property name="activatable-widget">switch_adw_gtk3</property>
+                                        <child type="suffix">
+                                          <object class="GtkSwitch" id="switch_adw_gtk3">
+                                            <property name="valign">3</property>
+                                            <property name="tooltip-text" translatable="true">Install adw-gtk3 theme for legacy app theming</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwActionRow" id="configure_system">
+                                        <property name="title" translatable="true">System Configuration</property>
+                                        <property name="activatable-widget">switch_system</property>
+                                        <child type="suffix">
+                                          <object class="GtkSwitch" id="switch_system">
+                                            <property name="valign">3</property>
+                                            <property name="tooltip-text" translatable="true">Configure system for theming, enables Flatpak theme override</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwStatusPage" id="page_download">
+                            <property name="vexpand">true</property>
+                            <property name="hexpand">true</property>
+                            <property name="title" translatable="true">Installing adw-gtk3</property>
+                            <property name="description" translatable="true">Please wait until theme will be installed.</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">1</property>
+                                <child>
+                                  <object class="GtkButton" id="btn_install">
+                                    <style>
+                                      <class name="suggested-action"/>
+                                      <class name="pill"/>
+                                    </style>
+                                    <property name="label" translatable="true">Continue</property>
+                                    <property name="use-underline">true</property>
+                                    <property name="halign">3</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkProgressBar" id="progressbar">
+                                    <property name="halign">3</property>
+                                    <property name="visible">false</property>
+                                    <property name="margin-top">24</property>
+                                    <property name="margin-bottom">24</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwStatusPage" id="page_finish">
+                            <property name="vexpand">true</property>
+                            <property name="hexpand">true</property>
+                            <property name="icon-name">selection-mode-symbolic</property>
+                            <property name="title" translatable="true">Done</property>
+                            <property name="description" translatable="true">Now you can make your own presets or download some online.</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">1</property>
+                                <child>
+                                  <object class="GtkButton" id="label_skip">
+                                    <property name="label" translatable="true">Please finish the setup first</property>
+                                    <property name="margin-bottom">24</property>
+                                    <property name="visible">true</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="btn_close">
+                                    <style>
+                                      <class name="suggested-action"/>
+                                      <class name="pill"/>
+                                    </style>
+                                    <property name="label" translatable="true">Start Using Gradience</property>
+                                    <property name="use-underline">true</property>
+                                    <property name="halign">3</property>
+                                    <property name="visible">true</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                    <child type="overlay">
+                      <object class="GtkButton" id="btn_next">
+                        <style>
+                          <class name="circular"/>
+                          <class name="suggested-action"/>
+                        </style>
+                        <property name="margin-end">12</property>
+                        <property name="icon-name">go-next-symbolic</property>
+                        <property name="halign">2</property>
+                        <property name="valign">3</property>
+                        <property name="visible">false</property>
+                        <property name="tooltip-text" translatable="true">Next</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

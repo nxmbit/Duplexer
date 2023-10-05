@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package duplexer;
+
+message PrintRequest {
+    int32 job_id = 1;
+    string user = 2;
+    string title = 3;
+    int32 num_copies = 4;
+    string options = 5;
+    string virtual_printer = 6;
+    bytes file = 7;
+}
