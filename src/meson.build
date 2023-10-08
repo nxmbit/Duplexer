@@ -1,6 +1,5 @@
 pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
 moduledir = join_paths(pkgdatadir, 'duplexer')
-gnome = import('gnome')
 
 gnome.compile_resources('duplexer',
   'duplexer.gresource.xml',
@@ -8,8 +7,6 @@ gnome.compile_resources('duplexer',
   install: true,
   install_dir: pkgdatadir,
 )
-
-python = import('python')
 
 conf = configuration_data()
 conf.set('PYTHON', python.find_installation('python3').path())
@@ -32,4 +29,4 @@ duplexer_sources = [
   'window.py',
 ]
 
-install_data(duplexer_sources, install_dir: moduledir)
+py_installation.install_sources(duplexer_sources, subdir: moduledir)

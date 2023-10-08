@@ -1,0 +1,4 @@
+flatpak-pip-generator
+.flatpak-builder/
+.idea/
+.vscode/

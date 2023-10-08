@@ -4,10 +4,18 @@ project('duplexer',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
+dependency('glib-2.0')
+dependency('gtk4', version: '>= 4.5.0')
+dependency('libadwaita-1', version: '>= 1.3.99')
+
+python = import('python')
 i18n = import('i18n')
 gnome = import('gnome')
 
+pkgdata_dir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
+module_dir = join_paths(pkgdata_dir, 'duplexer')
 
+py_installation = python.find_installation('python3', required: true)
 
 subdir('data')
 subdir('src')

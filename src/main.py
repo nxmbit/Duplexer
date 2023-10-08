@@ -4,9 +4,9 @@ import os
 import sys
 import logging
 
-import constants
-from printer_manager import PrinterManager
-from cli import Cli
+import backend.constants
+from backend.printer_manager import PrinterManager
+from backend.cli import Cli
 
 import gi
 gi.require_version('Gtk', '4.0')
@@ -28,12 +28,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-# manager = PrinterManager()
-# print(manager.get_printers())
-# manager.install_printer("DCPJ105")
-# manager.modify_ppd("DCPJ105")
-# print(manager.installed_printers)
-# print(manager.installed_printers[0].get_printer_info())
-# print(manager.installed_printers[0].get_ppd_path())
-# print(manager.installed_printers[0].get_uri())
