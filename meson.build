@@ -17,6 +17,15 @@ module_dir = join_paths(pkgdata_dir, 'duplexer')
 
 py_installation = python.find_installation('python3', required: true)
 
+if not py_installation.found()
+    error('No python3 installation found')
+endif
+
+conf = configuration_data()
+conf.set('PKGDATA_DIR', pkgdata_dir)
+conf.set('DATA_DIR', join_paths(get_option('prefix'), get_option('datadir')))
+conf.set('LOCALE_DIR', join_paths(get_option('prefix'), get_option('localedir')))
+
 subdir('data')
 subdir('src')
 subdir('po')

@@ -4,9 +4,8 @@ import os
 import sys
 import logging
 
-import backend.constants
-from backend.printer_manager import PrinterManager
-from backend.cli import Cli
+from duplexer.backend.cli import Cli
+from duplexer.backend import constants
 
 import gi
 gi.require_version('Gtk', '4.0')
@@ -19,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="
 os.environ["GDK_BACKEND"] = "x11"
 os.environ["DISPLAY"] = ":0"
 
-def main():
+def main(version):
     connection = cups.Connection()
     cli = Cli(connection)
     Gtk.init()

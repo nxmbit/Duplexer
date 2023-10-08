@@ -3,8 +3,8 @@ import json
 import os
 import logging
 
-import constants
-from printer import Printer
+from duplexer.backend import constants
+from duplexer.backend.printer import Printer
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")

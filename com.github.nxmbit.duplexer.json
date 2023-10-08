@@ -24,14 +24,15 @@
         "*.a"
     ],
     "modules" : [
+        "python3-flatpak-dependencies.json",
         {
             "name" : "duplexer",
             "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "file:///home/nxmbit/Projects"
+                    "type" : "dir",
+                    "url" : "."
                 }
             ]
         }

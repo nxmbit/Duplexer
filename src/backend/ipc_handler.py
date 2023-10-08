@@ -1,8 +1,10 @@
 import cups
 import logging
-import constants
-import proto.duplexer_ipc_pb2
-from printer import Printer
+
+
+from duplexer.proto import duplexer_ipc_pb2
+from duplexer.backend.printer import Printer
+from duplexer.backend import constants
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")
@@ -13,7 +15,7 @@ class IPCHandler:
         self.recv_data = recv_data
         self.connection = cups.Connection()
 
-        data = proto.duplexer_ipc_pb2.PrintRequest()
+        data = duplexer_ipc_pb2.PrintRequest()
         data.ParseFromString(self.recv_data)
 
         options = data.options.split(" ")

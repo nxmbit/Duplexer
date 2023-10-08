@@ -23,10 +23,13 @@ configure_file(
   install_mode: 'r-xr--r--'
 )
 
+subdir('backend')
+subdir('frontend')
+subdir('proto')
+
 duplexer_sources = [
   '__init__.py',
   'main.py',
-  'window.py',
 ]
 
 py_installation.install_sources(duplexer_sources, subdir: moduledir)

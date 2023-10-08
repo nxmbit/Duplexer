@@ -4,9 +4,9 @@ import daemon
 import errno
 import logging
 import cups
-import constants
 import struct
-from ipc_handler import IPCHandler
+from duplexer.backend import constants
+from duplexer.backend.ipc_handler import IPCHandler
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")

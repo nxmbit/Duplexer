@@ -1,10 +1,10 @@
 import argparse
 import sys
 import logging
-from printer_manager import PrinterManager
-import constants
 import keyboard
-from ipc_server import Daemon
+from duplexer.backend.printer_manager import PrinterManager
+from duplexer.backend.ipc_server import Daemon
+from duplexer.backend import constants
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")
@@ -45,6 +45,7 @@ class Cli:
 
         if args.list_printers:
             for printer in manager.get_printers_list():
+                pass
 
         elif args.list_installed:
             print(manager.installed_printers)
