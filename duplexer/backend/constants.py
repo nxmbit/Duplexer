@@ -1,5 +1,5 @@
 FILTER_FILENAME = "duplexer_filter"
 BACKEND_FILENAME = "duplexer"
-JSON_FILENAME = "/etc/duplexer/virtual_printers.json"
+#JSON_FILENAME = "/etc/duplexer/virtual_printers.json"
 SOCKET_PATH = "/var/run/duplexer_socket"
-LOG_PATH = "/tmp/duplexer.log"
+#LOG_PATH = "/tmp/duplexer.log"

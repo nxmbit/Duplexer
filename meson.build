@@ -27,7 +27,7 @@ conf.set('DATA_DIR', join_paths(get_option('prefix'), get_option('datadir')))
 conf.set('LOCALE_DIR', join_paths(get_option('prefix'), get_option('localedir')))
 
 subdir('data')
-subdir('src')
+subdir('duplexer')
 subdir('po')
 
 gnome.post_install(

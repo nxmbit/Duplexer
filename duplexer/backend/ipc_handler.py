@@ -1,13 +1,13 @@
 import cups
 import logging
 
-
+from duplexer.backend import xdg_globals
 from duplexer.proto import duplexer_ipc_pb2
 from duplexer.backend.printer import Printer
 from duplexer.backend import constants
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")
+logging.basicConfig(level=logging.DEBUG, filename=xdg_globals.duplexer_log_path, filemode="w")
 
 
 class IPCHandler:
@@ -39,6 +39,6 @@ class IPCHandler:
         logger.info("Filter called")
         logger.info(f"args: {self.args}")
 
-        printer = Printer.from_json(constants.JSON_FILENAME, self.args["virtual_printer"], self.connection)
+        printer = Printer.from_json(xdg_globals.duplexer_virtual_printers_path, self.args["virtual_printer"], self.connection)
         logger.debug(printer.get_status())
         printer.print_duplex(self.file, self.args["title"], self.args["options"])

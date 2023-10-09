@@ -1,13 +1,14 @@
 import argparse
-import sys
 import logging
-import keyboard
+
+from duplexer.backend import xdg_globals
 from duplexer.backend.printer_manager import PrinterManager
 from duplexer.backend.ipc_server import Daemon
 from duplexer.backend import constants
 
+
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")
+logging.basicConfig(level=logging.DEBUG, filename=xdg_globals.duplexer_log_path, filemode="w")
 
 
 class Cli:
@@ -41,7 +42,7 @@ class Cli:
         logger.debug("Manager called")
         logger.debug(f"args: {args}")
 
-        manager = PrinterManager.from_json(constants.JSON_FILENAME)
+        manager = PrinterManager.from_json(xdg_globals.duplexer_virtual_printers_path)
 
         if args.list_printers:
             for printer in manager.get_printers_list():

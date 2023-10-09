@@ -10,7 +10,10 @@
         "--socket=fallback-x11",
         "--device=dri",
         "--socket=wayland",
-        "--socket=cups"
+        "--socket=cups",
+        "--filesystem=/var/run",
+        "--filesystem=/etc",
+
     ],
     "cleanup" : [
         "/include",

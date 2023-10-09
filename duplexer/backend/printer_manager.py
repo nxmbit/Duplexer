@@ -3,11 +3,12 @@ import json
 import os
 import logging
 
+from duplexer.backend import xdg_globals
 from duplexer.backend import constants
 from duplexer.backend.printer import Printer
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")
+logging.basicConfig(level=logging.DEBUG, filename=xdg_globals.duplexer_log_path, filemode="w")
 
 
 class PrinterManager:
@@ -49,32 +50,32 @@ class PrinterManager:
         self.manager_conn.enablePrinter(virtual_printer_name)
         self.manager_conn.acceptJobs(virtual_printer_name)
 
-        printer.to_json(constants.JSON_FILENAME)
+        printer.to_json(xdg_globals.duplexer_virtual_printers_path)
         self.installed_printers.append(printer)
         logger.info(f"Installed virtual printer for {printer_name}")
 
     def remove_virtual_printer(self, virtual_printer_name):
         try:
-            with open(constants.JSON_FILENAME, "r") as file:
+            with open(xdg_globals.duplexer_virtual_printers_path, "r") as file:
                 printers_json = json.load(file)
             try:
                 printers_json.pop(virtual_printer_name)
             except KeyError:
-                logger.error(f"Printer {virtual_printer_name} not found in {constants.JSON_FILENAME}")
+                logger.error(f"Printer {virtual_printer_name} not found in {xdg_globals.duplexer_virtual_printers_path}")
                 raise
             try:
-                with open(constants.JSON_FILENAME, "w") as file:
+                with open(xdg_globals.duplexer_virtual_printers_path, "w") as file:
                     json.dump(printers_json, file)
             except PermissionError:
-                logger.error(f"Could not write to file {constants.JSON_FILENAME} - permission denied")
+                logger.error(f"Could not write to file {xdg_globals.duplexer_virtual_printers_path} - permission denied")
                 raise
             self.manager_conn.deletePrinter(virtual_printer_name)
             logger.info(f"Removed virtual printer: {virtual_printer_name}")
         except FileNotFoundError:
-            logger.error(f"Could not find file {constants.JSON_FILENAME}")
+            logger.error(f"Could not find file {xdg_globals.duplexer_virtual_printers_path}")
             raise
         except PermissionError:
-            logger.error(f"Could not read file {constants.JSON_FILENAME} - permission denied")
+            logger.error(f"Could not read file {xdg_globals.duplexer_virtual_printers_path} - permission denied")
             raise
 
     def modify_ppd(self, printer_name):

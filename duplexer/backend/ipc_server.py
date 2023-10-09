@@ -1,15 +1,16 @@
 import socket
 import os
-import daemon
+#import daemon
 import errno
 import logging
 import cups
 import struct
 from duplexer.backend import constants
+from duplexer.backend import xdg_globals
 from duplexer.backend.ipc_handler import IPCHandler
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, filename=constants.LOG_PATH, filemode="w")
+logging.basicConfig(level=logging.DEBUG, filename=xdg_globals.duplexer_log_path, filemode="w")
 
 
 class Daemon:
