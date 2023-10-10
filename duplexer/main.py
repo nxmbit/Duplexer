@@ -4,8 +4,11 @@ import sys
 import logging
 
 from duplexer.backend import xdg_globals
+xdg_globals.init_paths()
+
 from duplexer.backend.cli import Cli
 from duplexer.backend import constants
+
 
 
 import gi

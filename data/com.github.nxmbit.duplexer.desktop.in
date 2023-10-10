@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=duplexer
+Name=Duplexer
 Exec=duplexer
 Icon=com.github.nxmbit.duplexer
 Terminal=false

@@ -8,6 +8,7 @@ backend_sources = [
   'ipc_server.py',
   'printer.py',
   'printer_manager.py',
+  'xdg_globals.py',
   'testwindow.py',
 ]
 

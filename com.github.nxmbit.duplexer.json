@@ -1,7 +1,7 @@
 {
     "app-id" : "com.github.nxmbit.duplexer",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "45",
     "sdk" : "org.gnome.Sdk",
     "command" : "duplexer",
     "finish-args" : [
@@ -12,8 +12,7 @@
         "--socket=wayland",
         "--socket=cups",
         "--filesystem=/var/run",
-        "--filesystem=/etc",
-
+        "--filesystem=/etc"
     ],
     "cleanup" : [
         "/include",
@@ -27,6 +26,24 @@
         "*.a"
     ],
     "modules" : [
+    	{
+            "name" : "libportal",
+            "buildsystem" : "meson",
+
+            "config-opts": [
+              "-Dbackend-gtk4=enabled",
+              "-Dportal-tests=false",
+              "-Ddocs=false"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/flatpak/libportal.git",
+                    "branch": "main"
+
+                }
+            ]
+        },
         "python3-flatpak-dependencies.json",
         {
             "name" : "duplexer",

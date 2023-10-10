@@ -1,7 +1,8 @@
 import os
 import gi
-from gi.repository import Xdp
+
 gi.require_version('Xdp', '1.0')
+from gi.repository import Xdp
 
 user_config_dir = os.environ.get(
     "XDG_CONFIG_HOME", os.environ["HOME"] + "/.config"
