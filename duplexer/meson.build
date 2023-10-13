@@ -1,18 +1,9 @@
-pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
-moduledir = join_paths(pkgdatadir, 'duplexer')
-
 gnome.compile_resources('duplexer',
   'duplexer.gresource.xml',
   gresource_bundle: true,
   install: true,
-  install_dir: pkgdatadir,
+  install_dir: pkgdata_dir,
 )
-
-conf = configuration_data()
-conf.set('PYTHON', python.find_installation('python3').path())
-conf.set('VERSION', meson.project_version())
-conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
-conf.set('pkgdatadir', pkgdatadir)
 
 configure_file(
   input: 'duplexer.in',
