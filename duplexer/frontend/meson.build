@@ -1,4 +1,4 @@
-frontend_dir = join_paths(moduledir, 'frontend')
+frontend_dir = join_paths(module_dir, 'frontend')
 
 frontend_sources = [
 ]
