@@ -5,7 +5,7 @@ backend_sources = [
   'cli.py',
   'constants.py',
   'ipc_handler.py',
-  'ipc_server.py',
+  'socket_server.py',
   'printer.py',
   'printer_manager.py',
   'xdg_globals.py',

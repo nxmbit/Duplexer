@@ -22,9 +22,9 @@ class Cli:
 
         manager_subparser = subparsers.add_parser("manager", help="manage installed printers")
         list_printers = manager_subparser.add_mutually_exclusive_group()
-        list_printers.add_argument("--list_printers", "-l", action="store_true", help="list all printers")
-        list_printers.add_argument("--list_installed", action="store_true", help="list installed printers")
-        list_printers.add_argument("--list_available", action="store_true", help="list available printers")
+        list_printers.add_argument("--list-printers", "-l", action="store_true", help="list all printers")
+        list_printers.add_argument("--list-installed", action="store_true", help="list installed printers")
+        list_printers.add_argument("--list-available", action="store_true", help="list available printers")
         installer = manager_subparser.add_mutually_exclusive_group()
         installer.add_argument("--install", "-i", type=str, metavar="[printer name]",
                                help="install virtual printer for specified printer")
@@ -45,8 +45,10 @@ class Cli:
         manager = PrinterManager.from_json(xdg_globals.duplexer_virtual_printers_path)
 
         if args.list_printers:
+            print("")
             for printer in manager.get_printers_list():
                 pass
+
 
         elif args.list_installed:
             print(manager.installed_printers)
@@ -57,7 +59,7 @@ class Cli:
             print(f"Installing virtual printer for {args.install}")
             manager.install_virtual_printer(args.install)
         elif args.remove:
-            print(f"Removing virtual printer for {args.remove}")
+            print(f"Removing virtual printer: {args.remove}")
             manager.remove_virtual_printer(args.remove)
 
     def daemon(self, args):
@@ -71,8 +73,6 @@ class Cli:
 
 
     def cli(self):
-        # app = MyApp(application_id="com.example.GtkApplication")
-        # app.run()
         parser = self.get_parser()
         args = parser.parse_args()
 
@@ -82,5 +82,3 @@ class Cli:
             self.daemon(args)
         elif not args.subcommand:
             parser.print_help()
-        # if not vars(args):
-        #    self.get_parser().print_help()

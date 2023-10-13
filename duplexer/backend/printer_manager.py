@@ -2,6 +2,7 @@ import cups
 import json
 import os
 import logging
+import tempfile
 
 from duplexer.backend import xdg_globals
 from duplexer.backend import constants
@@ -46,7 +47,7 @@ class PrinterManager:
         location = printer.get_printer_info()["printer-location"]
 
         self.manager_conn.addPrinter(name=virtual_printer_name, filename=filename,
-                                     info=info, device=uri, location=location)
+                                    info=info, device=uri, location=location)
         self.manager_conn.enablePrinter(virtual_printer_name)
         self.manager_conn.acceptJobs(virtual_printer_name)
 
@@ -88,30 +89,25 @@ class PrinterManager:
             raise
 
         new_ppd = []
-        new_ppd_path = "/tmp/" + printer_name + "_duplexer.ppd" #TODO: use tempfile
-        is_cupsfilter = False
-        for line in ppd:
-            if line.startswith("*cupsFilter:"):
-                is_cupsfilter = True
-                split_line = line.split(" ")
-                split_line[-1] = f"{constants.FILTER_FILENAME}\"\n"
-                line = " ".join(split_line)
-            elif line.startswith("*cupsFilter2:"): #TODO: do i even need this?
-                is_cupsfilter = True
-                split_line = line.split(" ")
-                split_line[-1] = f"{constants.FILTER_FILENAME}\"\n"
-                line = " ".join(split_line)
-            new_ppd.append(line)
-
-        if not is_cupsfilter:
-            new_ppd.append(f"*cupsFilter: \"application/vnd.cups-postscript 0 {constants.FILTER_FILENAME}\"\n")
-            new_ppd.append(f"*cupsFilter: \"application/vnd.cups-pdf 0 {constants.FILTER_FILENAME}\"\n")
-
         try:
-            with open(new_ppd_path, "w") as file:
-                file.writelines(new_ppd)
-        except PermissionError:
-            logger.error(f"Could not write modified ppd file to {new_ppd_path} - permission denied")
-            raise
+            with tempfile.NamedTemporaryFile(mode="w", suffix=('_' + printer_name + '_' + "duplexer.ppd"),
+                                             prefix=printer_name, delete=False) as temp_file:
+                is_cupsfilter = False
+                for line in ppd:
+                    if line.startswith("*cupsFilter:") or line.startswith("*cupsFilter2:"):
+                        is_cupsfilter = True
+                        split_line = line.split(" ")
+                        split_line[-1] = f"{constants.FILTER_FILENAME}\"\n"
+                        line = " ".join(split_line)
+                    new_ppd.append(line)
 
-        return new_ppd_path
+                if not is_cupsfilter:
+                    new_ppd.append(f"*cupsFilter: \"application/vnd.cups-postscript 0 {constants.FILTER_FILENAME}\"\n")
+                    new_ppd.append(f"*cupsFilter: \"application/vnd.cups-pdf 0 {constants.FILTER_FILENAME}\"\n")
+
+                temp_file.writelines(new_ppd)
+                logger.debug(f"Created temporary file: {temp_file.name}")
+                return temp_file.name
+        except PermissionError:
+            logger.error(f"Could not write file to temporary directory - permission denied")
+            raise

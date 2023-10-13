@@ -1,0 +1,4 @@
+pycups
+protobuf
+keyboard
+dbus-python

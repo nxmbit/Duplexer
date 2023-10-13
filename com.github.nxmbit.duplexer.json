@@ -11,8 +11,7 @@
         "--device=dri",
         "--socket=wayland",
         "--socket=cups",
-        "--filesystem=/var/run",
-        "--filesystem=/etc"
+        "--socket=system-bus"
     ],
     "cleanup" : [
         "/include",
