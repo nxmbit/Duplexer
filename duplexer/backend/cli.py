@@ -3,7 +3,7 @@ import logging
 
 from duplexer.backend import xdg_globals
 from duplexer.backend.printer_manager import PrinterManager
-from duplexer.backend.ipc_server import Daemon
+from duplexer.backend.ipc.socket_server import Daemon
 from duplexer.backend import constants
 
 
