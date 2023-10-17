@@ -3,7 +3,6 @@ import os
 #import daemon
 import errno
 import logging
-import cups
 import struct
 from duplexer.backend import xdg_globals
 from duplexer.backend.ipc.socket_handler import IPCHandler
@@ -15,7 +14,6 @@ logging.basicConfig(level=logging.DEBUG, filename=xdg_globals.duplexer_log_path,
 class Daemon:
     def __init__(self, socket_path):
         self.socket_path = socket_path
-        self.connection = cups.Connection()
         self.is_running = False
 
     def socket_server(self):
