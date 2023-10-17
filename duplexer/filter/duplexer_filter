@@ -39,7 +39,7 @@ class Filter:
 
         return serialized_data_size, serialized_data
 
-    def ipc_send(self):
+    def socket_send(self):
         logger.info("Attempting to connect to socket")
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         try:
@@ -61,11 +61,14 @@ class Filter:
 
         sock.close()
 
+    def dbus_send(self):
+
+
 
 def main():
     logger.info("Filter called from CUPS, printer: " + os.environ["PRINTER"])
     cups_filter = Filter()
-    cups_filter.ipc_send()
+    cups_filter.socket_send()
     return 0
 
 main()

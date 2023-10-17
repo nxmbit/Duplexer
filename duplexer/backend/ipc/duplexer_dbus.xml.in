@@ -1,0 +1,8 @@
+<node>
+    <interface name='com.example.MyService'>
+        <method name='SayHello'>
+            <arg type='s' name='name' direction='in'/>
+            <arg type='s' name='response' direction='out'/>
+        </method>
+    </interface>
+</node>
