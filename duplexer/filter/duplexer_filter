@@ -4,6 +4,7 @@ import sys
 import socket
 import logging
 import struct
+import dbus
 import duplexer_ipc_pb2
 
 SOCKET_PATH = "/var/run/duplexer_socket"
@@ -62,7 +63,19 @@ class Filter:
         sock.close()
 
     def dbus_send(self):
+        pass
 
+    def test_dbus(self):
+        import dbus
+        try:
+            session_bus = dbus.SessionBus()
+            names = session_bus.list_names()  # zwraca listę dostępnych nazw usług
+            if 'org.freedesktop.DBus' in names:
+                print("D-Bus jest dostępny")
+            else:
+                print("D-Bus nie jest dostępny")
+        except dbus.DBusException:
+            print("Błąd podczas komunikacji z D-Bus")
 
 
 def main():
