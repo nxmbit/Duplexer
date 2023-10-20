@@ -14,9 +14,10 @@ configure_file(
 
 ipc_sources = [
     '__init__.py',
-    'ipc_handler.py',
+    'socket_handler.py',
     'socket_server.py',
     'dbus_service.py',
+    'dbus_handler.py',
 ]
 
 py_installation.install_sources(ipc_sources, subdir: ipc_dir)
